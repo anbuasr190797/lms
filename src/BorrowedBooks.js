@@ -23,7 +23,7 @@ export default function BorrowedBooks() {
                         <tr key={book.BookId}>
                             <td>{book.BookId}</td>
                             <td>{new Date(book.BorrowDate).toLocaleString()}</td>
-                            <td>{new Date(book.ReturnDate).toLocaleString()}</td>
+                            <td>{typeof book.ReturnDate=="string"? new Date(book.ReturnDate).toLocaleString():book.ReturnDate}</td>
                         </tr>
                     ))}
                 </tbody>

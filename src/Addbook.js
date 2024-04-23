@@ -13,16 +13,22 @@ function Addbook() {
         BookId: ""
     });
 
-    useEffect(() => {  
-        const fetchBookId = async () => {
-            try {
-                const response = await axios.get('http://localhost:3001/getBooks');
-                const bookId = parseInt((response.data.Items.sort((a, b) => b.BookId.localeCompare(a.BookId)))[0].BookId) + 1;
-                setData(prevData => ({...prevData, BookId: bookId.toString()}));
-            } catch (error) {
-                console.error('Error fetching books:', error);
+    const fetchBookId = async () => {
+        try {
+            const response = await axios.get('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/getBooks');
+            if(response.data.Items.length>0){
+                console.log(response.data.Items);
+            const bookId = parseInt((response.data.Items.sort((a, b) => b.BookId.localeCompare(a.BookId)))[0].BookId) + 1;
+            setData(prevData => ({...prevData, BookId: bookId.toString()}));
+            }else{
+                setData(prevData => ({...prevData, BookId: "1001"}));
             }
-        };
+        } catch (error) {
+            console.error('Error fetching books:', error);
+        }
+    };
+
+    useEffect(() => {  
 
         fetchBookId();
     }, []);
@@ -36,7 +42,7 @@ function Addbook() {
     };
 
     // const handleSubmit = (e) => {
-    //     fetch('http://localhost:3001/createBook', {
+    //     fetch('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/createBook', {
     //         method: 'POST',
     //         body: JSON.stringify(data),
     //         headers: {
@@ -58,7 +64,7 @@ function Addbook() {
 
     const handleSubmit =  async (e) => {
         try {
-          const response = await fetch('http://localhost:3001/createBook', {
+          const response = await fetch('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/createBook', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -66,8 +72,10 @@ function Addbook() {
             body: JSON.stringify(data),
           });
           if (response.status === 200) {
+            // e.preventDefault();
             alert('Book created successfully');
-            navigate('/dashboard');
+            fetchBookId();
+            navigate('/addbook');
           } else {
             throw new Error('Failed to create book');
           }
@@ -98,7 +106,7 @@ function Addbook() {
                 <button type="submit" className="btn btn-primary">Add Book</button>
             </form>
             <div className="mt-3">
-                <p>Available: {data.Available ? "Yes" : "No"}</p>
+                {/* <p>Available: {data.Available ? "Yes" : "No"}</p> */}
                 <p>Book ID: {data.BookId}</p>
             </div>
         </div>

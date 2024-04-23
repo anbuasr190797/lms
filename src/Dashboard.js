@@ -47,7 +47,7 @@ function Dashboard() {
 
         const fetchBooks = async () => {
           try {
-        const response = await axios.get('http://localhost:3001/getBooks');
+        const response = await axios.get('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/getBooks');
         setUser(JSON.parse(getCookie('currentUser')));
         setBooks(response.data.Items);
       } catch (error) {
@@ -60,11 +60,11 @@ function Dashboard() {
 
   const borrowBook = async (book) => { 
     const borrowDate = new Date().toISOString();
-    const returnDate = null;
+    const returnDate = "Yet to return";
     const data = book;
     data.Available = false;
     try {
-      const response = await fetch('http://localhost:3001/updateBookAvailabilityStatus', {
+      const response = await fetch('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/updateBookAvailabilityStatus', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ function Dashboard() {
         body: JSON.stringify(data),
       });
       try {
-        const response = await axios.put('http://localhost:3001/updateBookAvailabilityStatus', data);
+        const response = await axios.put('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/updateBookAvailabilityStatus', data);
         if (response.status === 200) {
           alert('Book borrowed successfully');
           // console.log(user[0]);
@@ -84,7 +84,7 @@ function Dashboard() {
           })
           setCookie('users', JSON.stringify(users), 1);
           setCookie('currentUser', JSON.stringify(user), 1);
-          axios.get('http://localhost:3001/getBooks').then((response) => {
+          axios.get('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/getBooks').then((response) => {
             setBooks(response.data.Items);
           });
           // updateBookAvailabilityAdmin({BookId: book.BookId, Available: false});
@@ -105,7 +105,7 @@ function Dashboard() {
     // console.log(data);
     data.Available = true;
     try {
-      const response = await fetch('http://localhost:3001/updateBookAvailabilityStatus', {
+      const response = await fetch('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/updateBookAvailabilityStatus', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ function Dashboard() {
       if (response.status === 200) {
         alert('Book returned successfully');
         
-        axios.get('http://localhost:3001/getBooks').then((response) => {
+        axios.get('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/getBooks').then((response) => {
           setBooks(response.data.Items);
         });
           
@@ -152,7 +152,7 @@ function Dashboard() {
 
   const deleteBook = async (book) => {
     try {
-      const response = await fetch('http://localhost:3001/deleteBook', {
+      const response = await fetch('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/deleteBook', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -161,7 +161,7 @@ function Dashboard() {
       });
       if (response.status === 200) {
         alert('Book deleted successfully');
-        axios.get('http://localhost:3001/getBooks').then((response) => {
+        axios.get('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/getBooks').then((response) => {
           setBooks(response.data.Items);
         });
       } else {
@@ -215,7 +215,7 @@ export default Dashboard;
 
   // const updateBookAvailabilityAdmin = async (data) => {
     //   try {
-      //     const response = await fetch('http://localhost:3001/updateBookAvailabilityStatus', {
+      //     const response = await fetch('http://lms-server-env.eba-uhgycy4i.us-east-1.elasticbeanstalk.com/updateBookAvailabilityStatus', {
         //       method: 'POST',
         //       headers: {
           //         'Content-Type': 'application/json',

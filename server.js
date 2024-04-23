@@ -6,8 +6,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const port = 3001;
-const API_ENDPOINT = 'https://7wrda01ytk.execute-api.ap-south-1.amazonaws.com/default/Dbinteractor';
-//const API_ENDPOINT = 'https://ln2ig26r47.execute-api.us-east-1.amazonaws.com/default/myFunctionName';
+//const API_ENDPOINT = 'https://7wrda01ytk.execute-api.ap-south-1.amazonaws.com/default/Dbinteractor';
+const API_ENDPOINT = 'https://ln2ig26r47.execute-api.us-east-1.amazonaws.com/default/myFunctionName';
 
 app.put('/updateBookAvailabilityStatus', async (req, res) => {
     const response = await axios.put(API_ENDPOINT, {

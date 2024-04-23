@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_ENDPOINT = 'https://7wrda01ytk.execute-api.ap-south-1.amazonaws.com/default/Dbinteractor';
+const API_ENDPOINT = 'https://ln2ig26r47.execute-api.us-east-1.amazonaws.com/default/myFunctionName';
 
 const createBook = async (data) => {
     const response = await axios.post(API_ENDPOINT, {
